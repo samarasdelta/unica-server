@@ -12,6 +12,7 @@ app.use(cors());
 /**
  * register routes
  */
+
 app.use("/api", api);
 
 app.listen(SERVER_PORT, () => console.log(`Server running on ${SERVER_PORT}`));
