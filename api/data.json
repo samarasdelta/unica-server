@@ -1,9 +1,9 @@
 {
     "papers": [
         {
-            "title": "Art & Design and implementation of robotic system to collect falling objects using machine vision",
+            "title": "Design and implementation of robotic system to collect falling objects using machine vision",
             "owner": "Ιωάννης Παπαχρήστου",
-            "category": "Psychics",
+            "category": "Computer Science",
             "dateCreated": "13/09/2020"
         },
         {
@@ -33,13 +33,13 @@
         {
             "title": "Design and Implementation of a Personal Response System",
             "owner": "Dimitrios Samaras",
-            "category": "Psychics",
+            "category": "Art & Design",
             "dateCreated": "13/09/2020"
         },
         {
             "title": "Design and implementation of a smart car/follower with avoid obstacles function",
             "owner": "Dimitrios Samaras",
-            "category": "Math",
+            "category": "Geology",
             "dateCreated": "03/10/2020"
         },
         {
@@ -51,7 +51,31 @@
         {
             "title": "Design and Implementation of a researchers web site",
             "owner": "Dimitrios Samaras",
-            "category": "Math",
+            "category": "Medicine",
+            "dateCreated": "03/10/2020"
+        },
+        {
+            "title": "Design and Implementation of a Personal Response System",
+            "owner": "Dimitrios Samaras",
+            "category": "Art & Design",
+            "dateCreated": "13/09/2020"
+        },
+        {
+            "title": "Design and implementation of a smart car/follower with avoid obstacles function",
+            "owner": "Dimitrios Samaras",
+            "category": "Geology",
+            "dateCreated": "03/10/2020"
+        },
+        {
+            "title": "Design and development of information system for management of internship positions at University of Western Macedonia",
+            "owner": "Dimitrios Samaras",
+            "category": "Psychics",
+            "dateCreated": "13/09/2020"
+        },
+        {
+            "title": "Design and Implementation of a researchers web site",
+            "owner": "Dimitrios Samaras",
+            "category": "Medicine",
             "dateCreated": "03/10/2020"
         }
     ]
