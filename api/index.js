@@ -5,15 +5,13 @@ const router = express.Router();
 const status = require("./status");
 router.use("/status", status);
 
-//const pool = require("../app");
-
+//Register routes
 router.get("/projects", (req, res) => {
-    console.log(pool,"pool");
-    pool.query('SELECT * FROM unica_projects ', function (error, results) {
-        if (error) throw error;
-        console.log('The solution is: ', results);
-        res.send(results);
-    }); 
+    pool.query('SELECT * FROM projects ', function (error, results) {
+       if (error) throw error;
+       console.log('The solution is: ', results);
+       res.send(results); 
+   }); 
 });
 
 module.exports = router;
