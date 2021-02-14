@@ -1,0 +1,23 @@
+{
+	"extends": [
+		"airbnb",
+		"eslint:recommended",
+		"plugin:prettier/recommended",
+		"plugin:import/errors"
+	],
+	"plugins": [
+		"import",
+		"prettier"
+	],
+	"rules": {
+		"linebreak-style": "off",
+		"prettier/prettier": "error"
+	},
+	"parserOptions": {
+		"ecmaVersion": 2017
+	},
+	"env": {
+		"node": true,
+		"es6": true
+	}
+}
