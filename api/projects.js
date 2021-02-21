@@ -6,9 +6,8 @@ const pool = require("../models/db.js");
 
 // Register routes
 router.get("/", (req, res) => {
-  pool.query("SELECT * FROM projects ", function (error, results) {
+  pool.query("SELECT * FROM projects ", (error, results) => {
     if (error) throw error;
-    console.log("The solution is: ", results);
     res.send(results);
   });
 });
