@@ -19,7 +19,7 @@ router.post("/", (req, res) => {
   // res.send(req.body.title);
   // console.log(req.body);
   pool.query(
-    `INSERT INTO projects(projectTitle) VALUES ('${req.body.title}') `,
+    `INSERT INTO projects(projectTitle, projectCategory, projectState) VALUES ('${req.body.title}', '${req.body.category}', '${req.body.public}') `,
     (error, results) => {
       // console.log(results.insertId);
       if (error) throw error;
