@@ -16,13 +16,20 @@ router.get("/", (req, res) => {
 
 // create project
 router.post("/", (req, res) => {
+  // console.log(req);
   // res.send(req.body.title);
   // console.log(req.body);
   pool.query(
-    `INSERT INTO projects(projectTitle, projectCategory, projectState) VALUES ('${req.body.title}', '${req.body.category}', '${req.body.public}') `,
+    `INSERT INTO projects(projectTitle, projectCategory, projectState, projectDateCreated) VALUES ('${req.body.title}', '${req.body.category}', '${req.body.public}', '${Date.now}') `,
     (error, results) => {
       // console.log(results.insertId);
-      if (error) throw error;
+      if (error) {
+        // console.log('Error message: ', error.message);
+        res.status(500).json({
+          error: error.message,
+        });
+        throw error;
+      }
       pool.query(
         `SELECT * FROM projects WHERE projectId=${results.insertId}`,
         (error1, results1) => {
