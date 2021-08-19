@@ -81,5 +81,15 @@ router.delete("/:projectId", (req, res) => {
   );
 });
 
+// get project id
+router.get("/:projectId", (req, res) => {
+  const id = req.params.projectId;
+  pool.query(`SELECT * FROM projects WHERE projectId=${id}`, (err, results) => {
+    if (err) res.status(500).send({ error: err.message });
+
+    return res.status(200).send(results[0]);
+  });
+});
+
 // export
 module.exports = router;
