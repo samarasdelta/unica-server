@@ -16,9 +16,6 @@ router.get("/", (req, res) => {
 
 // create project
 router.post("/", (req, res) => {
-  // console.log(req);
-  // res.send(req.body.title);
-  // console.log(req.body);
   pool.query(
     `INSERT INTO projects(projectTitle, projectCategory, projectState) VALUES ('${req.body.title}', '${req.body.category}', '${req.body.public}') `,
     (error, results) => {
@@ -44,16 +41,39 @@ router.post("/", (req, res) => {
 // delete project
 router.delete("/:projectId", (req, res) => {
   const id = req.params.projectId;
-  pool.query(`DELETE FROM projects WHERE projectId=${id}`, (error) => {
-    if (error) {
-      res.status(500).send({
-        error: error.message,
+
+  pool.query(
+    `SELECT * FROM projects WHERE projectId=${id}`,
+    (error, results) => {
+      const projects = JSON.parse(JSON.stringify(results));
+
+      if (error) throw error;
+      if (projects.length > 0) {
+        const projectToBeDeleted = projects[0];
+        if (projectToBeDeleted.projectDeleted === 1) {
+          pool.query(
+            `DELETE FROM projects WHERE projectId=${projectToBeDeleted.projectId}`,
+            (err) => {
+              if (err) {
+                res.status(500).send({
+                  error: err.message,
+                });
+              }
+              res.status(200).send({
+                message: `Project with id: ${id} deleted`,
+              });
+            }
+          );
+        } else {
+          // ή να μην είναι οπότε να το κάνουμε "διαγραμμενο"
+        }
+      }
+
+      res.status(400).send({
+        message: `Project with id: ${id} does not exist!`,
       });
     }
-    res.status(200).send({
-      message: `Project with id: ${id} deleted`,
-    });
-  });
+  );
 });
 
 module.exports = router;
