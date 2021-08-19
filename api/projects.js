@@ -44,9 +44,9 @@ router.delete("/:projectId", (req, res) => {
 
   pool.query(
     `SELECT * FROM projects WHERE projectId=${id}`,
+    // eslint-disable-next-line consistent-return
     (error, results) => {
       const projects = JSON.parse(JSON.stringify(results));
-
       if (error) throw error;
       if (projects.length > 0) {
         const projectToBeDeleted = projects[0];
@@ -55,23 +55,28 @@ router.delete("/:projectId", (req, res) => {
             `DELETE FROM projects WHERE projectId=${projectToBeDeleted.projectId}`,
             (err) => {
               if (err) {
-                res.status(500).send({
+                return res.status(500).send({
                   error: err.message,
                 });
               }
-              res.status(200).send({
+              return res.status(200).send({
                 message: `Project with id: ${id} deleted`,
               });
             }
           );
         } else {
-          // ή να μην είναι οπότε να το κάνουμε "διαγραμμενο"
+          pool.query(
+            `UPDATE projects SET projectDeleted = 1 WHERE projectId=${projectToBeDeleted.projectId}`
+          );
+          return res.status(200).send({
+            message: `Project with id: ${id} marked as deleted`,
+          });
         }
+      } else {
+        return res.status(400).send({
+          message: `Project with id: ${id} does not exist!`,
+        });
       }
-
-      res.status(400).send({
-        message: `Project with id: ${id} does not exist!`,
-      });
     }
   );
 });
