@@ -41,4 +41,19 @@ router.post("/", (req, res) => {
   );
 });
 
+// delete project
+router.delete("/:projectId", (req, res) => {
+  const id = req.params.projectId;
+  pool.query(`DELETE FROM projects WHERE projectId=${id}`, (error) => {
+    if (error) {
+      res.status(500).send({
+        error: error.message,
+      });
+    }
+    res.status(200).send({
+      message: `Project with id: ${id} deleted`,
+    });
+  });
+});
+
 module.exports = router;
