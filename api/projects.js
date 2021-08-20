@@ -91,17 +91,33 @@ router.get("/:projectId", (req, res) => {
   });
 });
 
+const getQuery = (reqBody) => {
+  const mappings = {
+    title: "projectTitle",
+    category: "projectCategory",
+    public: "projectState",
+  };
+
+  return Object.entries(reqBody)
+    .map((entry) => {
+      const key = entry[0];
+      const value = entry[1];
+
+      return `${mappings[key]} = '${value}'`;
+    })
+    .join(", ");
+};
+
 // put update
 router.put("/:projectId", (req, res) => {
   const id = req.params.projectId;
 
   pool.query(
-    `UPDATE projects SET projectTitle = '${req.body.title}', projectCategory = '${req.body.category}', projectState = '${req.body.public}' WHERE projectId=${id}`,
-    (err, results) => {
-      console.log("results: ", results);
+    `UPDATE projects SET ${getQuery(req.body)} WHERE projectId=${id}`,
+    (err) => {
       if (err) res.status(500).send({ error: err.message });
       return res.status(200).send({
-        message: `Project with id: ${id}, title changed`,
+        message: `Project with id: ${id}, title, category and state changed`,
       });
     }
   );
