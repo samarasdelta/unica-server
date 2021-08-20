@@ -8,10 +8,13 @@ const pool = require("../models/db.js");
 
 // read projects
 router.get("/", (req, res) => {
-  pool.query("SELECT * FROM projects ", (error, results) => {
-    if (error) throw error;
-    res.send(results);
-  });
+  pool.query(
+    "SELECT * FROM projects ORDER BY projectId DESC ",
+    (error, results) => {
+      if (error) throw error;
+      res.send(results);
+    }
+  );
 });
 
 // create project
@@ -91,6 +94,7 @@ router.get("/:projectId", (req, res) => {
   });
 });
 
+// query mappings for put update
 const getQuery = (reqBody) => {
   const mappings = {
     title: "projectTitle",
