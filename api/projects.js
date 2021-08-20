@@ -19,8 +19,14 @@ router.get("/", (req, res) => {
 
 // create project
 router.post("/", (req, res) => {
+  const mapBool = {
+    true: 1,
+    false: 0,
+  };
+  const publicBoolean = mapBool[req.body.public];
+
   pool.query(
-    `INSERT INTO projects(projectTitle, projectCategory, projectState) VALUES ('${req.body.title}', '${req.body.category}', '${req.body.public}') `,
+    `INSERT INTO projects(projectTitle, projectCategory, projectState) VALUES ('${req.body.title}', '${req.body.category}', '${publicBoolean}') `,
     (error, results) => {
       // console.log(results.insertId);
       if (error) {
