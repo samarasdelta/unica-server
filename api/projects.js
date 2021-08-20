@@ -91,5 +91,21 @@ router.get("/:projectId", (req, res) => {
   });
 });
 
+// put update
+router.put("/:projectId", (req, res) => {
+  const id = req.params.projectId;
+
+  pool.query(
+    `UPDATE projects SET projectTitle = '${req.body.title}', projectCategory = '${req.body.category}', projectState = '${req.body.public}' WHERE projectId=${id}`,
+    (err, results) => {
+      console.log("results: ", results);
+      if (err) res.status(500).send({ error: err.message });
+      return res.status(200).send({
+        message: `Project with id: ${id}, title changed`,
+      });
+    }
+  );
+});
+
 // export
 module.exports = router;
