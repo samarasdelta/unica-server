@@ -93,11 +93,11 @@ router.delete("/:projectId", (req, res) => {
 // get project to be deleted
 router.get("/deleted", (req, res) => {
   pool.query(
-    `SELECT * FROM projects WHERE projectDeleted='1'`,
+    `SELECT * FROM projects WHERE projectDeleted="1"`,
     (err, results) => {
       if (err) res.status(500).send({ error: err.message });
 
-      return res.status(200).send(results[0]);
+      return res.status(200).send(results);
     }
   );
 });
