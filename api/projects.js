@@ -9,7 +9,7 @@ const pool = require("../models/db.js");
 // read projects
 router.get("/", (req, res) => {
   pool.query(
-    "SELECT * FROM projects ORDER BY projectId DESC ",
+    `SELECT * FROM projects WHERE projectDeleted="0" ORDER BY projectId DESC`,
     (error, results) => {
       if (error) throw error;
       res.send(results);
