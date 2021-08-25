@@ -119,15 +119,18 @@ const getQuery = (reqBody) => {
     category: "projectCategory",
     public: "projectState",
   };
+  const entries = Object.entries(reqBody);
 
-  return Object.entries(reqBody)
-    .map((entry) => {
-      const key = entry[0];
-      const value = entry[1];
+  const array = entries.map((entry) => {
+    const key = entry[0];
+    const value = entry[1];
 
-      return `${mappings[key]} = '${value}'`;
-    })
-    .join(", ");
+    return `${mappings[key]} = '${value}'`;
+  });
+
+  const query = array.join(", ");
+
+  return query;
 };
 
 // put update
