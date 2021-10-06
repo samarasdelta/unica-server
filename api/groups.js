@@ -8,7 +8,7 @@ const pool = require("../models/db.js");
 
 // read projects
 router.get("/", (req, res) => {
-  pool.query(`SELECT * FROM groups`, (error, results) => {
+  pool.query(`SELECT * FROM groups ORDER BY groupId DESC`, (error, results) => {
     if (error) throw error;
     res.send(results);
   });
