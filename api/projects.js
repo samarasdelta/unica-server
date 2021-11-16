@@ -169,11 +169,26 @@ router.put("/:projectId", (req, res) => {
     (err) => {
       if (err) res.status(500).send({ error: err.message });
       return res.status(200).send({
-        message: `Project with id: ${id}, title, category and state changed`,
+        message: `Project with id: ${id}, title, category state and deletion status changed`,
       });
     }
   );
 });
+
+// // put update ProjectDeleted
+// router.put("/:projectId", (req, res) => {
+//   const id = req.params.projectId;
+
+//   pool.query(
+//     `UPDATE projects SET projectDeleted = 0 WHERE projectId=${id}`,
+//     (err) => {
+//       if (err) res.status(500).send({ error: err.message });
+//       return res.status(200).send({
+//         message: `Project with id: ${id}, title, category state and deletion status changed`,
+//       });
+//     }
+//   );
+// });
 
 // export
 module.exports = router;
