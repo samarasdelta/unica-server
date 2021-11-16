@@ -102,6 +102,33 @@ router.get("/deleted", (req, res) => {
   );
 });
 
+// get public project
+router.get("/public", (req, res) => {
+  pool.query(
+    `SELECT * FROM projects WHERE projectState="1" AND projectDeleted="0" ORDER BY projectDateCreated DESC`,
+    (err, results) => {
+      if (err) res.status(500).send({ error: err.message });
+
+      return res.status(200).send(results);
+    }
+  );
+});
+
+// // restore project to be deleted
+// router.put("/deleted", (req, res) => {
+//   const id = req.params.projectId;
+//   const projectToBeDeleted = projects[0];
+
+//   pool.query(
+//     `UPDATE projects SET projectDeleted = 0 WHERE projectId=${projectToBeDeleted.projectId}`,
+//     (err, results) => {
+//       if (err) res.status(500).send({ error: err.message });
+
+//       return res.status(200).send(results);
+//     }
+//   );
+// });
+
 // get project id
 router.get("/:projectId", (req, res) => {
   const id = req.params.projectId;
