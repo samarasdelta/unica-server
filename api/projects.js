@@ -114,21 +114,6 @@ router.get("/public", (req, res) => {
   );
 });
 
-// // restore project to be deleted
-// router.put("/deleted", (req, res) => {
-//   const id = req.params.projectId;
-//   const projectToBeDeleted = projects[0];
-
-//   pool.query(
-//     `UPDATE projects SET projectDeleted = 0 WHERE projectId=${projectToBeDeleted.projectId}`,
-//     (err, results) => {
-//       if (err) res.status(500).send({ error: err.message });
-
-//       return res.status(200).send(results);
-//     }
-//   );
-// });
-
 // get project id
 router.get("/:projectId", (req, res) => {
   const id = req.params.projectId;
@@ -145,6 +130,7 @@ const getQuery = (reqBody) => {
     title: "projectTitle",
     category: "projectCategory",
     public: "projectState",
+    isDeleted: "projectDeleted",
   };
   const entries = Object.entries(reqBody);
 
@@ -169,26 +155,11 @@ router.put("/:projectId", (req, res) => {
     (err) => {
       if (err) res.status(500).send({ error: err.message });
       return res.status(200).send({
-        message: `Project with id: ${id}, title, category state and deletion status changed`,
+        message: `Project with id: ${id}, title, category and state status changed`,
       });
     }
   );
 });
-
-// // put update ProjectDeleted
-// router.put("/:projectId", (req, res) => {
-//   const id = req.params.projectId;
-
-//   pool.query(
-//     `UPDATE projects SET projectDeleted = 0 WHERE projectId=${id}`,
-//     (err) => {
-//       if (err) res.status(500).send({ error: err.message });
-//       return res.status(200).send({
-//         message: `Project with id: ${id}, title, category state and deletion status changed`,
-//       });
-//     }
-//   );
-// });
 
 // export
 module.exports = router;
