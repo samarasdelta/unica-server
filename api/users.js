@@ -17,7 +17,7 @@ router.get("/", (req, res) => {
 // create group
 router.post("/", (req, res) => {
   pool.query(
-    `INSERT INTO users(userFirstName, userSurName, userEmail) VALUES ('${req.body.fname}', '${req.body.sname}' ,'${req.body.email}') `,
+    `INSERT INTO users(userFirstName, userSurName, userEmail, userPassword ) VALUES ('${req.body.fname}', '${req.body.sname}' ,'${req.body.email}', '${req.body.pass}') `,
     (error, results) => {
       // console.log(results.insertId);
       if (error) {
