@@ -14,6 +14,16 @@ router.get("/", (req, res) => {
   });
 });
 
+// // get project id
+// router.get("/:userId", (req, res) => {
+//   const id = req.params.userId;
+//   pool.query(`SELECT * FROM users WHERE userId=${id}`, (err, results) => {
+//     if (err) res.status(500).send({ error: err.message });
+
+//     return res.status(200).send(results[0]);
+//   });
+// });
+
 // create group
 router.post("/", (req, res) => {
   pool.query(
