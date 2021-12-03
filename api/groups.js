@@ -6,7 +6,7 @@ const pool = require("../models/db.js");
 
 // Register routes
 
-// read projects
+// read groups
 router.get("/", (req, res) => {
   pool.query(`SELECT * FROM groups ORDER BY groupId DESC`, (error, results) => {
     if (error) throw error;
@@ -19,9 +19,7 @@ router.post("/", (req, res) => {
   pool.query(
     `INSERT INTO groups(groupTitle) VALUES ('${req.body.title}') `,
     (error, results) => {
-      // console.log(results.insertId);
       if (error) {
-        // console.log('Error message: ', error.message);
         res.status(500).json({
           error: error.message,
         });
@@ -38,7 +36,7 @@ router.post("/", (req, res) => {
   );
 });
 
-// get project id
+// get group id
 router.get("/:groupId", (req, res) => {
   const id = req.params.groupId;
   pool.query(`SELECT * FROM groups WHERE groupId=${id}`, (err, results) => {
