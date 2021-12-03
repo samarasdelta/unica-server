@@ -38,5 +38,15 @@ router.post("/", (req, res) => {
   );
 });
 
+// get project id
+router.get("/:groupId", (req, res) => {
+  const id = req.params.groupId;
+  pool.query(`SELECT * FROM groups WHERE groupId=${id}`, (err, results) => {
+    if (err) res.status(500).send({ error: err.message });
+
+    return res.status(200).send(results[0]);
+  });
+});
+
 // export
 module.exports = router;
