@@ -28,9 +28,7 @@ router.post("/", (req, res) => {
   pool.query(
     `INSERT INTO projects(projectTitle, projectCategory, projectState) VALUES ('${req.body.title}', '${req.body.category}', '${publicBoolean}') `,
     (error, results) => {
-      // console.log(results.insertId);
       if (error) {
-        // console.log('Error message: ', error.message);
         res.status(500).json({
           error: error.message,
         });
