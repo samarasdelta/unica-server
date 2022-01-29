@@ -4,8 +4,7 @@
   "description": "unica server",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon src/",
-    "prod": "node src/",
+    "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 0",
     "lint": "eslint \"./**/*.js\"",
     "dev": "NODE_ENV=development nodemon app.js"
