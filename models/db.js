@@ -4,6 +4,7 @@ const dbConfig = require("../config/db.config.js");
 // Create a connection to the database
 const pool = mysql.createPool({
   host: dbConfig.HOST,
+  // socketPath: dbConfig.SOCKET,
   user: dbConfig.USER,
   password: dbConfig.PASS,
   database: dbConfig.DB,

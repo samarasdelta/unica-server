@@ -38,10 +38,27 @@ router.post("/", (req, res) => {
       pool.query(
         `SELECT * FROM users WHERE userId=${results.insertId}`,
         (error1, results1) => {
-          if (error1) throw error;
+          if (error1) {
+            res.status(500).json({
+              error1: error1.message,
+            });
+            throw error1;
+          }
           res.send(results1);
         }
       );
+      // pool.query(
+      //   `SELECT CONCAT('${req.body.fname}', ' ' ,'${req.body.sname}') AS userDisplayName from users`,
+      //   (error2, results2) => {
+      //     if (error2) {
+      //       res.status(500).json({
+      //         error2: error2.message,
+      //       });
+      //       throw error2;
+      //     }
+      //     res.send(results2);
+      //   }
+      // );
     }
   );
 });
@@ -58,3 +75,15 @@ router.get("/:userId", (req, res) => {
 
 // export
 module.exports = router;
+
+// pool.query(
+//   `SELECT CONCAT_WS(' ', '${req.body.fname}', '${req.body.fname}') AS userDisplayName from users`,
+//   (error2) => {
+//     if (error2) {
+//       res.status(500).json({
+//         error2: error2.message,
+//       });
+//       throw error2;
+//     }
+//   }
+// );
