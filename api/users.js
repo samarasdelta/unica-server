@@ -10,14 +10,17 @@ const pool = require("../models/db.js");
 router.get("/", (req, res) => {
   pool.query(`SELECT * FROM users ORDER BY userId DESC`, (error, results) => {
     if (error) throw error;
-    // map
 
-    const User = results;
+    const users = results;
 
-    // User.userFullName = `${User.userFirstName} ${User.userSurName}`;
+    const updatedUsers = users.map((user) => {
+      // console.log("user: ", user);
+      // eslint-disable-next-line no-param-reassign
+      user.userFullName = `${user.userFirstName} ${user.userSurName}`;
+      return user;
+    });
 
-    // console.log("result: ", User);
-    res.send(User);
+    res.send(updatedUsers);
   });
 });
 
