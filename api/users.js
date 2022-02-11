@@ -10,7 +10,14 @@ const pool = require("../models/db.js");
 router.get("/", (req, res) => {
   pool.query(`SELECT * FROM users ORDER BY userId DESC`, (error, results) => {
     if (error) throw error;
-    res.send(results);
+    // map
+
+    const User = results;
+
+    // User.userFullName = `${User.userFirstName} ${User.userSurName}`;
+
+    // console.log("result: ", User);
+    res.send(User);
   });
 });
 
@@ -27,7 +34,7 @@ router.get("/:userId", (req, res) => {
 // create user
 router.post("/", (req, res) => {
   pool.query(
-    `INSERT INTO users(userFirstName, userSurName, userEmail, userPassword, userDateOfBirth, userTelephone ) VALUES ('${req.body.fname}', '${req.body.sname}' ,'${req.body.email}', '${req.body.pass}' ,'${req.body.dob}','${req.body.telephone}' ) `,
+    `INSERT INTO users(userFirstName, userSurName, userEmail, userPassword, userDateOfBirth, userTelephone ) VALUES ('${req.body.fname}', '${req.body.sname}' , '${req.body.email}', '${req.body.pass}' ,'${req.body.dob}','${req.body.telephone}' ) `,
     (error, results) => {
       if (error) {
         res.status(500).json({
@@ -44,21 +51,13 @@ router.post("/", (req, res) => {
             });
             throw error1;
           }
+          // const createdUser = results1[0];
+
+          // createdUser.userFullName = `${createdUser.userFirstName} ${createdUser.userSurName}`;
+
           res.send(results1);
         }
       );
-      // pool.query(
-      //   `SELECT CONCAT('${req.body.fname}', ' ' ,'${req.body.sname}') AS userDisplayName from users`,
-      //   (error2, results2) => {
-      //     if (error2) {
-      //       res.status(500).json({
-      //         error2: error2.message,
-      //       });
-      //       throw error2;
-      //     }
-      //     res.send(results2);
-      //   }
-      // );
     }
   );
 });
@@ -66,24 +65,17 @@ router.post("/", (req, res) => {
 // get user id
 router.get("/:userId", (req, res) => {
   const id = req.params.userId;
-  pool.query(`SELECT * FROM users WHERE userId=${id}`, (err, results) => {
-    if (err) res.status(500).send({ error: err.message });
+  pool.query(`SELECT * FROM users WHERE userId=${id}`, (error, results) => {
+    if (error) {
+      res.status(500).json({
+        error: error.message,
+      });
+      throw error;
+    }
 
-    return res.status(200).send(results[0]);
+    res.send(results);
   });
 });
 
 // export
 module.exports = router;
-
-// pool.query(
-//   `SELECT CONCAT_WS(' ', '${req.body.fname}', '${req.body.fname}') AS userDisplayName from users`,
-//   (error2) => {
-//     if (error2) {
-//       res.status(500).json({
-//         error2: error2.message,
-//       });
-//       throw error2;
-//     }
-//   }
-// );
