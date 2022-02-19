@@ -26,7 +26,7 @@ const writeFileSync = async (where, what) => {
 
 const compileLatex = async (texFile) => {
   return new Promise((resolve, reject) => {
-    exec(`./laton -o public ${texFile}`, (error, stdout, stderr) => {
+    exec(`./laton -o public ${texFile}`, (error) => {
       if (error) reject(error);
 
       resolve("Success!");
@@ -95,7 +95,7 @@ router.post("/", (req, res) => {
         // return pdf
         const filePath = `./${name}.pdf`;
         res.json({
-          pdf: `http://localhost:4000/api/latex/public/${name}.pdf`,
+          pdf: `http://localhost:4000/api/latex/public/${filePath}`,
         });
         // const pdfData = await readFileSync(filePath);
         // res.contentType("application/pdf");
