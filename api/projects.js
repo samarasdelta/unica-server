@@ -123,25 +123,40 @@ router.get("/:projectId", (req, res) => {
 });
 
 // query mappings for put update
+// const getQuery = (reqBody) => {
+//   const mappings = {
+//     title: "projectTitle",
+//     category: "projectCategory",
+//     public: "projectState",
+//     isDeleted: "projectDeleted",
+//     text: "projectInfo",
+//   };
+//   const entries = Object.entries(reqBody);
+
+//   const array = entries.map((entry) => {
+//     const key = entry[0];
+//     const value = entry[1];
+
+//     return `${mappings[key]} = '${value}'`;
+//   });
+
+//   const query = array.join(", ");
+
+//   return query;
+// };
+
 const getQuery = (reqBody) => {
   const mappings = {
     title: "projectTitle",
     category: "projectCategory",
     public: "projectState",
     isDeleted: "projectDeleted",
+    text: "projectInfo",
   };
-  const entries = Object.entries(reqBody);
-
-  const array = entries.map((entry) => {
-    const key = entry[0];
-    const value = entry[1];
-
-    return `${mappings[key]} = '${value}'`;
-  });
-
-  const query = array.join(", ");
-
-  return query;
+  console.log("body:", reqBody);
+  return {
+    projectInfo: reqBody.text,
+  };
 };
 
 // put update
@@ -149,7 +164,8 @@ router.put("/:projectId", (req, res) => {
   const id = req.params.projectId;
 
   pool.query(
-    `UPDATE projects SET ${getQuery(req.body)} WHERE projectId=${id}`,
+    `UPDATE projects SET ? WHERE projectId=${id}`,
+    getQuery(req.body),
     (err) => {
       if (err) res.status(500).send({ error: err.message });
       return res.status(200).send({
