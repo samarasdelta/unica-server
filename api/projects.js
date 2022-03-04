@@ -153,7 +153,6 @@ const getQuery = (reqBody) => {
     isDeleted: "projectDeleted",
     text: "projectInfo",
   };
-  console.log("body:", reqBody);
   return {
     projectInfo: reqBody.text,
   };
@@ -169,7 +168,7 @@ router.put("/:projectId", (req, res) => {
     (err) => {
       if (err) res.status(500).send({ error: err.message });
       return res.status(200).send({
-        message: `Project with id: ${id}, title, category and state status changed`,
+        message: `Project with id: ${id}, updated!`,
       });
     }
   );
