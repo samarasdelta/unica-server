@@ -176,8 +176,6 @@ const getQuery = (reqBody) => {
     query.projectInfo = reqBody.text;
   }
 
-  console.log("query:", query);
-
   return query;
 };
 
