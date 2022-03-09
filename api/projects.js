@@ -146,16 +146,39 @@ router.get("/:projectId", (req, res) => {
 // };
 
 const getQuery = (reqBody) => {
-  const mappings = {
-    title: "projectTitle",
-    category: "projectCategory",
-    public: "projectState",
-    isDeleted: "projectDeleted",
-    text: "projectInfo",
-  };
-  return {
-    projectInfo: reqBody.text,
-  };
+  const query = {};
+
+  // const mappings = {
+  //   title: "projectTitle",
+  //   category: "projectCategory",
+  //   public: "projectState",
+  //   isDeleted: "projectDeleted",
+  //   text: "projectInfo",
+  // };
+
+  if (reqBody.title) {
+    query.projectTitle = reqBody.title;
+  }
+
+  if (reqBody.category) {
+    query.projectCategory = reqBody.category;
+  }
+
+  if (reqBody.public) {
+    query.projectState = reqBody.public;
+  }
+
+  if (reqBody.isDeleted) {
+    query.projectDeleted = reqBody.isDeleted;
+  }
+
+  if (reqBody.text) {
+    query.projectInfo = reqBody.text;
+  }
+
+  console.log("query:", query);
+
+  return query;
 };
 
 // put update
