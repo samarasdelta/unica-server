@@ -1,3 +1,4 @@
+const fs = require("fs");
 const express = require("express");
 
 const router = express.Router();
@@ -173,7 +174,11 @@ const getQuery = (reqBody) => {
   }
 
   if (reqBody.text) {
-    query.projectInfo = reqBody.text;
+    const mathTemplate = fs.readFileSync(
+      "./templates/math-example/main.tex",
+      "utf8"
+    );
+    query.projectInfo = `${mathTemplate}`;
   }
 
   return query;
