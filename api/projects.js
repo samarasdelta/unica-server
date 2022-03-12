@@ -174,12 +174,16 @@ const getQuery = (reqBody) => {
   }
 
   if (reqBody.text) {
-    const mathTemplate = fs.readFileSync(
-      "./templates/math-example/main.tex",
-      "utf8"
-    );
-    query.projectInfo = `${mathTemplate}`;
+    query.projectInfo = reqBody.text;
   }
+
+  // if (reqBody.text) {
+  //   const mathTemplate = fs.readFileSync(
+  //     "./templates/math-example/main.tex",
+  //     "utf8"
+  //   );
+  //   query.projectInfo = `${mathTemplate}`;
+  // }
 
   return query;
 };
