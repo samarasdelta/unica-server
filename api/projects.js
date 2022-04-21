@@ -3,7 +3,7 @@ const express = require("express");
 
 const router = express.Router();
 
-const pool = require("../models/db.js");
+const { pool } = require("../models/db.js");
 
 // Register routes
 

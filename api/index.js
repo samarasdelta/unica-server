@@ -4,6 +4,7 @@ const status = require("./status");
 const projects = require("./projects");
 const groups = require("./groups");
 const users = require("./users");
+const test = require("./test");
 const latexCompiler = require("./latexCompiler");
 
 const app = express();
@@ -25,5 +26,8 @@ router.use("/latex", latexCompiler);
 
 // Groups endpoint
 router.use("/users", users);
+
+// Groups endpoint
+router.use("/test", test);
 
 module.exports = router;

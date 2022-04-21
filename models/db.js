@@ -11,4 +11,16 @@ const pool = mysql.createPool({
   connectionLimit: dbConfig.CONLIMIT,
 });
 
-module.exports = pool;
+const db = async (sqlQueryString) => {
+  return new Promise((resolve, reject) => {
+    pool.query(sqlQueryString, (error, results) => {
+      if (error) reject(error);
+      resolve(results);
+    });
+  });
+};
+
+module.exports = {
+  db,
+  pool,
+};
