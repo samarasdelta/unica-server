@@ -14,6 +14,7 @@ router.post("/login", async (req, res, next) => {
     const [user] = await db.getUserByEmail(email);
     console.log(user);
     if (
+      !user ||
       !user.userEmail ||
       !user.userPassword ||
       !user.userId ||
