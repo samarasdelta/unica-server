@@ -65,7 +65,7 @@ router.get("/:template", async (req, res) => {
   try {
     await compileTemplate(template);
     // return pdf
-    const filePath = "./main.pdf";
+    const filePath = `./templates/${template}/main.tex`;
     const pdfData = await readFileSync(filePath);
     res.contentType("application/pdf");
     res.send(pdfData);

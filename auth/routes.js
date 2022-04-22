@@ -12,7 +12,8 @@ router.post("/login", async (req, res, next) => {
   console.log(`Login attempt ${email}`);
   try {
     const [user] = await db.getUserByEmail(email);
-    console.log(user);
+    //     let payload = { "id" : "1"};
+    // let token = jwt.sign( payload,'secret',  { noTimestamp:true, expiresIn: '1h' });
     if (
       !user ||
       !user.userEmail ||
@@ -24,7 +25,10 @@ router.post("/login", async (req, res, next) => {
     }
 
     const secret = process.env.JWT_SECRET || "your_jwt_secret";
-    const token = jwt.sign({ userId: user.id }, secret);
+    const token = jwt.sign({ userId: user.userId }, secret, {
+      noTimestamp: true,
+      expiresIn: "1h",
+    });
     delete user.pass;
     delete user.salt;
     return res.send({ token, user });

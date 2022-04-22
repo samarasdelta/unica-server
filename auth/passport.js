@@ -13,6 +13,7 @@ passport.use(
   new JwtStrategy(config, async (jwtPayload, done) => {
     try {
       const user = await db.getUserById(jwtPayload.userId);
+      console.log("USERIDPASSPORT", user);
       if (user) {
         return done(null, user);
       }

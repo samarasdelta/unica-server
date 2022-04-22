@@ -3,48 +3,68 @@ const express = require("express");
 
 const router = express.Router();
 
+const passport = require("passport");
+
+const jwt = require("jsonwebtoken");
+
 const { pool } = require("../models/db.js");
 
 // Register routes
 
 // read projects
-router.get("/", (req, res) => {
-  pool.query(
-    `SELECT * FROM projects WHERE projectDeleted="0" ORDER BY projectId DESC`,
-    (error, results) => {
-      if (error) throw error;
-      res.send(results);
-    }
-  );
-});
+router.get(
+  "/",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const token = req.headers.authorization.slice(7);
+    const decoded = jwt.decode(token);
+    console.log("USERID", decoded.userId);
+
+    pool.query(
+      `SELECT * FROM projects WHERE projectDeleted="0" AND projectOwnerId='${decoded.userId}' ORDER BY projectId DESC`,
+      (error, results) => {
+        if (error) throw error;
+        res.send(results);
+      }
+    );
+  }
+);
 
 // create project
-router.post("/", (req, res) => {
-  const mapBool = {
-    true: 1,
-    false: 0,
-  };
-  const publicBoolean = mapBool[req.body.public];
+router.post(
+  "/",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const mapBool = {
+      true: 1,
+      false: 0,
+    };
+    const publicBoolean = mapBool[req.body.public];
+    const token = req.headers.authorization.slice(7);
+    const decoded = jwt.decode(token);
 
-  pool.query(
-    `INSERT INTO projects(projectTitle, projectCategory, projectState) VALUES ('${req.body.title}', '${req.body.category}', '${publicBoolean}') `,
-    (error, results) => {
-      if (error) {
-        res.status(500).json({
-          error: error.message,
-        });
-        throw error;
-      }
-      pool.query(
-        `SELECT * FROM projects WHERE projectId=${results.insertId}`,
-        (error1, results1) => {
-          if (error1) throw error;
-          res.send(results1);
+    pool.query(
+      `INSERT INTO projects(projectTitle, projectCategory, projectTemplate, projectState, projectOwnerId) VALUES ('${req.body.title}', '${req.body.category}', '${req.body.template.folderName}', '${publicBoolean}', '${decoded.userId}' ) `,
+      (error, results) => {
+        if (error) {
+          res.status(500).json({
+            error: error.message,
+          });
+
+          throw error;
         }
-      );
-    }
-  );
-});
+
+        pool.query(
+          `SELECT * FROM projects WHERE projectId=${results.insertId}`,
+          (error1, results1) => {
+            if (error1) throw error;
+            res.send(results1);
+          }
+        );
+      }
+    );
+  }
+);
 
 // delete project
 router.delete("/:projectId", (req, res) => {
