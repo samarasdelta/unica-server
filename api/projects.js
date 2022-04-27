@@ -110,16 +110,22 @@ router.delete("/:projectId", (req, res) => {
 });
 
 // get project to be deleted
-router.get("/deleted", (req, res) => {
-  pool.query(
-    `SELECT * FROM projects WHERE projectDeleted="1" ORDER BY projectDateCreated DESC`,
-    (err, results) => {
-      if (err) res.status(500).send({ error: err.message });
+router.get(
+  "/deleted",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const token = req.headers.authorization.slice(7);
+    const decoded = jwt.decode(token);
+    pool.query(
+      `SELECT * FROM projects WHERE projectDeleted="1" AND projectOwnerId='${decoded.userId}' ORDER BY projectDateCreated DESC`,
+      (err, results) => {
+        if (err) res.status(500).send({ error: err.message });
 
-      return res.status(200).send(results);
-    }
-  );
-});
+        return res.status(200).send(results);
+      }
+    );
+  }
+);
 
 // get public project
 router.get("/public", (req, res) => {
