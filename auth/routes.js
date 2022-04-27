@@ -42,11 +42,13 @@ router.post("/login", async (req, res, next) => {
  * Users Registration
  */
 router.post("/register", async (req, res, next) => {
-  const { email, pass } = req.body;
+  const { email, pass, fname, sname } = req.body;
 
   const user = {
     email,
     pass,
+    fname,
+    sname,
   };
 
   db.createUser(user)

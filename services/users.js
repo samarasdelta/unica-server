@@ -14,10 +14,10 @@ const getUserByEmail = (email) => {
 };
 
 // doesn't work because of empty lines (userFirstName)
-const createUser = ({ email, pass, fname, sname, dob, telephone }) => {
+const createUser = ({ email, pass, fname, sname }) => {
   return db(
-    `INSERT INTO users(userFirstName, userSurName, userEmail, userPassword, userDateOfBirth, userTelephone )
-    VALUES ('${fname}', '${sname}' , '${email}', '${pass}' ,'${dob}','${telephone}' ) `
+    `INSERT INTO users(userFirstName, userSurName, userEmail, userPassword )
+    VALUES ('${fname}', '${sname}' , '${email}', '${pass}' ) `
   );
 };
 
