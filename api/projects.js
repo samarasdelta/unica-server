@@ -18,7 +18,7 @@ router.get(
   (req, res) => {
     const token = req.headers.authorization.slice(7);
     const decoded = jwt.decode(token);
-    console.log("USERID", decoded.userId);
+    // console.log("USERID: ", decoded.userId);
 
     pool.query(
       `SELECT * FROM projects WHERE projectDeleted="0" AND projectOwnerId='${decoded.userId}' ORDER BY projectId DESC`,
@@ -42,6 +42,7 @@ router.post(
     const publicBoolean = mapBool[req.body.public];
     const token = req.headers.authorization.slice(7);
     const decoded = jwt.decode(token);
+    console.log("decoded: ", decoded);
 
     pool.query(
       `INSERT INTO projects(projectTitle, projectCategory, projectTemplate, projectState, projectOwnerId) VALUES ('${req.body.title}', '${req.body.category}', '${req.body.template.folderName}', '${publicBoolean}', '${decoded.userId}' ) `,

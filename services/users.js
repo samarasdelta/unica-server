@@ -13,7 +13,6 @@ const getUserByEmail = (email) => {
   return db(`SELECT * FROM users where userEmail = '${email}'`);
 };
 
-// doesn't work because of empty lines (userFirstName)
 const createUser = ({ email, pass, fname, sname }) => {
   return db(
     `INSERT INTO users(userFirstName, userSurName, userEmail, userPassword )
