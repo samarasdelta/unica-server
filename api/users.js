@@ -88,8 +88,42 @@ router.get("/:userId", (req, res) => {
       throw error;
     }
 
-    res.send(results);
+    res.send(results[0]);
   });
+});
+
+const getQuery = (reqBody) => {
+  const query = {};
+
+  if (reqBody.email) {
+    query.userEmail = reqBody.email;
+  }
+
+  if (reqBody.fname) {
+    query.userFirstName = reqBody.fname;
+  }
+
+  if (reqBody.sname) {
+    query.userSurName = reqBody.sname;
+  }
+
+  return query;
+};
+
+// put update
+router.put("/:userId", (req, res) => {
+  const id = req.params.userId;
+
+  pool.query(
+    `UPDATE users SET ? WHERE userId=${id}`,
+    getQuery(req.body),
+    (err) => {
+      if (err) res.status(500).send({ error: err.message });
+      return res.status(200).send({
+        message: `User with id: ${id}, updated!`,
+      });
+    }
+  );
 });
 
 // export
