@@ -149,12 +149,20 @@ router.get(
 // get public project
 router.get("/public", (req, res) => {
   pool.query(
-    // `SELECT * FROM projects WHERE projectState="1" AND projectDeleted="0" ORDER BY projectDateCreated DESC`,
-    `SELECT projects.projectTitle AS projectTitle, projects.projectCategory AS projectCategory, users.userFirstName AS userFirstName, users.userSurName AS userLastName FROM users JOIN projects ON projects.projectOwnerId = users.userId WHERE projectState="1" AND projectDeleted="0" ORDER BY projectDateCreated DESC`,
+    `SELECT projects.projectTitle AS projectTitle, projects.projectCategory AS projectCategory, users.userFirstName AS userFirstName, users.userSurName AS userSurName FROM users JOIN projects ON projects.projectOwnerId = users.userId WHERE projectState="1" AND projectDeleted="0" ORDER BY projectDateCreated DESC`,
     (err, results) => {
       if (err) res.status(500).send({ error: err.message });
 
-      return res.status(200).send(results);
+      const projects = results;
+
+      const updatedProjects = projects.map((user) => {
+        // console.log("user: ", user);
+        // eslint-disable-next-line no-param-reassign
+        user.userFullName = `${user.userFirstName} ${user.userSurName}`;
+        return user;
+      });
+
+      return res.status(200).send(updatedProjects);
     }
   );
 });
