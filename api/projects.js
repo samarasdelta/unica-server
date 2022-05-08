@@ -150,7 +150,7 @@ router.get(
 router.get("/public", (req, res) => {
   pool.query(
     // `SELECT * FROM projects WHERE projectState="1" AND projectDeleted="0" ORDER BY projectDateCreated DESC`,
-    `SELECT projects.projectTitle AS projectTitle, projects.projectCategory AS projectCategory, users.userFirstName AS userName, users.userSurName AS userLastName FROM users JOIN projects ON projects.projectOwnerId = users.userId WHERE projectState="1" AND projectDeleted="0"`,
+    `SELECT projects.projectTitle AS projectTitle, projects.projectCategory AS projectCategory, users.userFirstName AS userFirstName, users.userSurName AS userLastName FROM users JOIN projects ON projects.projectOwnerId = users.userId WHERE projectState="1" AND projectDeleted="0" ORDER BY projectDateCreated DESC`,
     (err, results) => {
       if (err) res.status(500).send({ error: err.message });
 
