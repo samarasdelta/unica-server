@@ -42,10 +42,28 @@ router.post(
     const publicBoolean = mapBool[req.body.public];
     const token = req.headers.authorization.slice(7);
     const decoded = jwt.decode(token);
-    console.log("decoded: ", decoded);
+    // console.log("decoded: ", decoded);
+
+    let codeTemplate;
+
+    if (req.body.template) {
+      codeTemplate = fs.readFileSync(
+        `./templates/${req.body.template.folderName}/main.tex`,
+        "utf8"
+      );
+    }
+
+    const projectCode = req.body.template ? `${codeTemplate}` : "";
 
     pool.query(
-      `INSERT INTO projects(projectTitle, projectCategory, projectTemplate, projectState, projectOwnerId) VALUES ('${req.body.title}', '${req.body.category}', '${req.body.template.folderName}', '${publicBoolean}', '${decoded.userId}' ) `,
+      `INSERT INTO projects(projectTitle, projectCategory, projectState, projectOwnerId, projectInfo) VALUES (?, ?, ?, ?, ?) `,
+      [
+        req.body.title,
+        req.body.category,
+        publicBoolean,
+        decoded.userId,
+        projectCode,
+      ],
       (error, results) => {
         if (error) {
           res.status(500).json({
