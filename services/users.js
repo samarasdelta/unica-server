@@ -15,7 +15,7 @@ const getUserByEmail = (email) => {
 
 const createUser = ({ email, pass, fname, sname }) => {
   return db(
-    `INSERT INTO users(userFirstName, userSurName, userEmail, userPassword )
+    `INSERT INTO users(userFirstName, userSurName, userEmail, userPassword)
     VALUES ('${fname}', '${sname}' , '${email}', '${pass}' ) `
   );
 };
