@@ -155,7 +155,6 @@ router.get("/public", (req, res) => {
       const projects = results;
 
       const updatedProjects = projects.map((user) => {
-        // console.log("user: ", user);
         // eslint-disable-next-line no-param-reassign
         user.userFullName = `${user.userFirstName} ${user.userSurName}`;
         return user;

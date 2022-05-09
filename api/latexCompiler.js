@@ -97,9 +97,6 @@ router.post("/", (req, res) => {
         res.json({
           pdf: `http://localhost:4000/api/latex/public/${filePath}`,
         });
-        // const pdfData = await readFileSync(filePath);
-        // res.contentType("application/pdf");
-        // res.send(pdfData);
       } catch (e) {
         res.status(500).json({
           error: e.message,
