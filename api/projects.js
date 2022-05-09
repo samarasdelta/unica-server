@@ -42,7 +42,6 @@ router.post(
     const publicBoolean = mapBool[req.body.public];
     const token = req.headers.authorization.slice(7);
     const decoded = jwt.decode(token);
-    // console.log("decoded: ", decoded);
 
     let codeTemplate;
 
@@ -177,39 +176,9 @@ router.get("/:projectId", (req, res) => {
   });
 });
 
-// query mappings for put update
-// const getQuery = (reqBody) => {
-//   const mappings = {
-//     title: "projectTitle",
-//     category: "projectCategory",
-//     public: "projectState",
-//     isDeleted: "projectDeleted",
-//     text: "projectInfo",
-//   };
-//   const entries = Object.entries(reqBody);
-
-//   const array = entries.map((entry) => {
-//     const key = entry[0];
-//     const value = entry[1];
-
-//     return `${mappings[key]} = '${value}'`;
-//   });
-
-//   const query = array.join(", ");
-
-//   return query;
-// };
-
+// checking for unused fields
 const getQuery = (reqBody) => {
   const query = {};
-
-  // const mappings = {
-  //   title: "projectTitle",
-  //   category: "projectCategory",
-  //   public: "projectState",
-  //   isDeleted: "projectDeleted",
-  //   text: "projectInfo",
-  // };
 
   if (reqBody.title) {
     query.projectTitle = reqBody.title;
@@ -230,14 +199,6 @@ const getQuery = (reqBody) => {
   if (reqBody.text) {
     query.projectInfo = reqBody.text;
   }
-
-  // if (reqBody.text) {
-  //   const mathTemplate = fs.readFileSync(
-  //     "./templates/math-example/main.tex",
-  //     "utf8"
-  //   );
-  //   query.projectInfo = `${mathTemplate}`;
-  // }
 
   return query;
 };

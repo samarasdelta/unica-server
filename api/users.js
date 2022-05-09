@@ -46,36 +46,36 @@ router.get("/:userId", (req, res) => {
   });
 });
 
-// create user
-router.post("/", (req, res) => {
-  pool.query(
-    `INSERT INTO users(userFirstName, userSurName, userEmail, userPassword, userDateOfBirth, userTelephone ) VALUES ('${req.body.fname}', '${req.body.sname}' , '${req.body.email}', '${req.body.pass}' ,'${req.body.dob}','${req.body.telephone}' ) `,
-    (error, results) => {
-      if (error) {
-        res.status(500).json({
-          error: error.message,
-        });
-        throw error;
-      }
-      pool.query(
-        `SELECT * FROM users WHERE userId=${results.insertId}`,
-        (error1, results1) => {
-          if (error1) {
-            res.status(500).json({
-              error1: error1.message,
-            });
-            throw error1;
-          }
-          // const createdUser = results1[0];
+// // create user
+// router.post("/", (req, res) => {
+//   pool.query(
+//     `INSERT INTO users(userFirstName, userSurName, userEmail, userPassword, userDateOfBirth, userTelephone ) VALUES ('${req.body.fname}', '${req.body.sname}' , '${req.body.email}', '${req.body.pass}' ,'${req.body.dob}','${req.body.telephone}' ) `,
+//     (error, results) => {
+//       if (error) {
+//         res.status(500).json({
+//           error: error.message,
+//         });
+//         throw error;
+//       }
+//       pool.query(
+//         `SELECT * FROM users WHERE userId=${results.insertId}`,
+//         (error1, results1) => {
+//           if (error1) {
+//             res.status(500).json({
+//               error1: error1.message,
+//             });
+//             throw error1;
+//           }
+//           // const createdUser = results1[0];
 
-          // createdUser.userFullName = `${createdUser.userFirstName} ${createdUser.userSurName}`;
+//           // createdUser.userFullName = `${createdUser.userFirstName} ${createdUser.userSurName}`;
 
-          res.send(results1);
-        }
-      );
-    }
-  );
-});
+//           res.send(results1);
+//         }
+//       );
+//     }
+//   );
+// });
 
 // get user id
 router.get("/:userId", (req, res) => {

@@ -37,7 +37,8 @@ router.post(
     const decoded = jwt.decode(token);
 
     pool.query(
-      `INSERT INTO groups(groupTitle, groupOwnerId) VALUES ('${req.body.title}', '${decoded.userId}' ) `,
+      `INSERT INTO groups(groupTitle, groupOwnerId) VALUES (?, ?) `,
+      [req.body.title, decoded.userId],
       (error, results) => {
         if (error) {
           res.status(500).json({
