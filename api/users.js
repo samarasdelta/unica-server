@@ -45,21 +45,6 @@ router.get("/:userId", (req, res) => {
   });
 });
 
-// get user id
-router.get("/:userId", (req, res) => {
-  const id = req.params.userId;
-  pool.query(`SELECT * FROM users WHERE userId=${id}`, (error, results) => {
-    if (error) {
-      res.status(500).json({
-        error: error.message,
-      });
-      throw error;
-    }
-
-    res.send(results[0]);
-  });
-});
-
 const getQuery = (reqBody) => {
   const query = {};
 
@@ -73,6 +58,10 @@ const getQuery = (reqBody) => {
 
   if (reqBody.sname) {
     query.userSurName = reqBody.sname;
+  }
+
+  if (reqBody.pass) {
+    query.userPassword = reqBody.pass;
   }
 
   return query;
