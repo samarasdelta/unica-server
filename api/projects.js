@@ -148,7 +148,7 @@ router.get(
 // get public project
 router.get("/public", (req, res) => {
   pool.query(
-    `SELECT projects.projectTitle AS projectTitle, projects.projectCategory AS projectCategory, users.userFirstName AS userFirstName, users.userSurName AS userSurName, users.userEmail AS userEmail FROM users JOIN projects ON projects.projectOwnerId = users.userId WHERE projectState="1" AND projectDeleted="0" ORDER BY projectDateCreated DESC`,
+    `SELECT projects.projectTitle AS projectTitle, projects.projectCategory AS projectCategory, projects.projectAbstract AS projectAbstract, users.userFirstName AS userFirstName, users.userSurName AS userSurName, users.userEmail AS userEmail FROM users JOIN projects ON projects.projectOwnerId = users.userId WHERE projectState="1" AND projectDeleted="0" ORDER BY projectDateCreated DESC`,
     (err, results) => {
       if (err) res.status(500).send({ error: err.message });
 
@@ -197,6 +197,10 @@ const getQuery = (reqBody) => {
 
   if (reqBody.text) {
     query.projectInfo = reqBody.text;
+  }
+
+  if (reqBody.abstract) {
+    query.projectAbstract = reqBody.abstract;
   }
 
   return query;
