@@ -25,7 +25,7 @@ router.post("/login", async (req, res, next) => {
     const secret = process.env.JWT_SECRET || "your_jwt_secret";
     const token = jwt.sign({ userId: user.userId }, secret, {
       noTimestamp: true,
-      expiresIn: "1h",
+      expiresIn: "4h",
     });
     delete user.pass;
     delete user.salt;
