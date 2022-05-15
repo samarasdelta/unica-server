@@ -27,6 +27,7 @@ router.get("/", (req, res) => {
   });
 });
 
+// get user
 router.get(
   "/me",
   passport.authenticate("jwt", { session: false }),
@@ -38,7 +39,7 @@ router.get(
       `SELECT * FROM users WHERE userId='${decoded.userId}' `,
       (error, results) => {
         if (error) throw error;
-        res.send(results);
+        res.send(results[0]);
       }
     );
   }
@@ -85,21 +86,43 @@ const getQuery = (reqBody) => {
   return query;
 };
 
-// put update
-router.put("/:userId", (req, res) => {
-  const id = req.params.userId;
+// must be protected
+// old put update
+// router.put("/:userId", (req, res) => {
+//   const id = req.params.userId;
 
-  pool.query(
-    `UPDATE users SET ? WHERE userId=${id}`,
-    getQuery(req.body),
-    (err) => {
-      if (err) res.status(500).send({ error: err.message });
-      return res.status(200).send({
-        message: `User with id: ${id}, updated!`,
-      });
-    }
-  );
-});
+//   pool.query(
+//     `UPDATE users SET ? WHERE userId=${id}`,
+//     getQuery(req.body),
+//     (err) => {
+//       if (err) res.status(500).send({ error: err.message });
+//       return res.status(200).send({
+//         message: `User with id: ${id}, updated!`,
+//       });
+//     }
+//   );
+// });
+
+// put update
+router.put(
+  "/me",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const token = req.headers.authorization.slice(7);
+    const decoded = jwt.decode(token);
+
+    pool.query(
+      `UPDATE users SET ? WHERE userId=${decoded.userId}`,
+      getQuery(req.body),
+      (err) => {
+        if (err) res.status(500).send({ error: err.message });
+        return res.status(200).send({
+          message: `User with id: ${decoded.userId}, updated!`,
+        });
+      }
+    );
+  }
+);
 
 // export
 module.exports = router;
