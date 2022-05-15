@@ -18,7 +18,6 @@ router.get(
   (req, res) => {
     const token = req.headers.authorization.slice(7);
     const decoded = jwt.decode(token);
-    // console.log("USERID: ", decoded.userId);
 
     pool.query(
       `SELECT * FROM projects WHERE projectDeleted="0" AND projectOwnerId='${decoded.userId}' ORDER BY projectId DESC`,

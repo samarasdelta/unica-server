@@ -2,6 +2,10 @@ const express = require("express");
 
 const router = express.Router();
 
+const jwt = require("jsonwebtoken");
+
+const passport = require("passport");
+
 const { pool } = require("../models/db.js");
 
 // Register routes
@@ -22,6 +26,23 @@ router.get("/", (req, res) => {
     res.send(updatedUsers);
   });
 });
+
+router.get(
+  "/me",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const token = req.headers.authorization.slice(7);
+    const decoded = jwt.decode(token);
+
+    pool.query(
+      `SELECT * FROM users WHERE userId='${decoded.userId}' `,
+      (error, results) => {
+        if (error) throw error;
+        res.send(results);
+      }
+    );
+  }
+);
 
 // get user id
 router.get("/:userId", (req, res) => {
