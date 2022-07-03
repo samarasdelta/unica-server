@@ -11,21 +11,31 @@ const { pool } = require("../models/db.js");
 // Register routes
 
 // read users
-router.get("/", (req, res) => {
-  pool.query(`SELECT * FROM users ORDER BY userId DESC`, (error, results) => {
-    if (error) throw error;
+router.get(
+  "/",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const token = req.headers.authorization.slice(7);
+    const decoded = jwt.decode(token);
 
-    const users = results;
+    pool.query(
+      `SELECT * FROM users ORDER BY userId='${decoded.userId}' DESC`,
+      (error, results) => {
+        if (error) throw error;
 
-    const updatedUsers = users.map((user) => {
-      // eslint-disable-next-line no-param-reassign
-      user.userFullName = `${user.userFirstName} ${user.userSurName}`;
-      return user;
-    });
+        const users = results;
 
-    res.send(updatedUsers);
-  });
-});
+        const updatedUsers = users.map((user) => {
+          // eslint-disable-next-line no-param-reassign
+          user.userFullName = `${user.userFirstName} ${user.userSurName}`;
+          return user;
+        });
+
+        res.send(updatedUsers);
+      }
+    );
+  }
+);
 
 // get user
 router.get(
