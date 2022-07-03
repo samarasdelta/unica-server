@@ -5,6 +5,7 @@ const projects = require("./projects");
 const groups = require("./groups");
 const users = require("./users");
 const latexCompiler = require("./latexCompiler");
+// const mysql = require("serverless-mysql")();
 
 const app = express();
 app.use(cors());

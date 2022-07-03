@@ -6,5 +6,4 @@ module.exports = {
   PASS: "",
   // PASS: "root",
   DB: "unicadb",
-  CONLIMIT: "10",
 };
