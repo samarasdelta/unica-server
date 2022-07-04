@@ -13,13 +13,13 @@ const { pool } = require("../models/db.js");
 // read users
 router.get(
   "/",
-  passport.authenticate("jwt", { session: false }),
+  // passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    const token = req.headers.authorization.slice(7);
-    const decoded = jwt.decode(token);
+    // const token = req.headers.authorization.slice(7);
+    // const decoded = jwt.decode(token);
 
     pool.query(
-      `SELECT * FROM users ORDER BY userId='${decoded.userId}' DESC`,
+      `SELECT * FROM users ORDER BY userId='userId' DESC`,
       (error, results) => {
         if (error) throw error;
 
