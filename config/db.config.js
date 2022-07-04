@@ -8,7 +8,7 @@ module.exports = {
   PASS: "8e5e4d90",
   // PASS: "",
   // PASS: "root",
-  DB: "unicadb",
+  DB: "heroku_42b9e19a38ed999",
 };
 
 // mysql://b797c3a2cc660f:8e5e4d90@eu-cdbr-west-03.cleardb.net/heroku_42b9e19a38ed999?reconnect=true
