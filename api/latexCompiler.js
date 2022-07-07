@@ -95,7 +95,7 @@ router.post("/", (req, res) => {
         // return pdf
         const filePath = `./${name}.pdf`;
         res.json({
-          pdf: `http://localhost:4000/api/latex/public/${filePath}`,
+          pdf: `https://unica-server.vercel.app/api/latex/public/${filePath}`,
         });
       } catch (e) {
         res.status(500).json({
