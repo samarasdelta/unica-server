@@ -26,7 +26,7 @@ const writeFileSync = async (where, what) => {
 
 const compileLatex = async (texFile) => {
   return new Promise((resolve, reject) => {
-    exec(`./laton -o public ${texFile}`, (error) => {
+    exec(`laton -o public ${texFile}`, (error) => {
       if (error) reject(error);
 
       resolve("Success!");
@@ -37,7 +37,7 @@ const compileLatex = async (texFile) => {
 const compileTemplate = async (pathToTemplate) => {
   return new Promise((resolve, reject) => {
     exec(
-      `./laton ./templates/${pathToTemplate}/main.tex ./templates/${pathToTemplate}/*`,
+      `./laton -o ./templates/${pathToTemplate}/main.pdf ./templates/${pathToTemplate}/main.tex ./templates/${pathToTemplate}/*`,
       (error) => {
         if (error) reject(error);
 
@@ -65,7 +65,7 @@ router.get("/:template", async (req, res) => {
   try {
     await compileTemplate(template);
     // return pdf
-    const filePath = `./templates/${template}/main.tex`;
+    const filePath = `./templates/${template}/main.pdf`;
     const pdfData = await readFileSync(filePath);
     res.contentType("application/pdf");
     res.send(pdfData);
