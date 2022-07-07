@@ -1,4 +1,4 @@
-const fs = require("fs");
+// const fs = require("fs");
 const express = require("express");
 
 const router = express.Router();
@@ -44,12 +44,12 @@ router.post(
 
     let codeTemplate;
 
-    if (req.body.template) {
-      codeTemplate = fs.readFileSync(
-        `./templates/${req.body.template.folderName}/main.tex`,
-        "utf8"
-      );
-    }
+    // if (req.body.template) {
+    //   codeTemplate = fs.readFileSync(
+    //     `./templates/${req.body.template.folderName}/main.tex`,
+    //     "utf8"
+    //   );
+    // }
 
     const projectCode = req.body.template ? `${codeTemplate}` : "";
 
