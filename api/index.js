@@ -1,3 +1,4 @@
+const path = require("path");
 const express = require("express");
 const cors = require("cors");
 const status = require("./status");
@@ -26,5 +27,7 @@ router.use("/latex", latexCompiler);
 
 // users endpoint
 router.use("/users", users);
+
+router.use("/tex", express.static(path.join(__dirname, "../tex")));
 
 module.exports = router;
