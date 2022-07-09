@@ -28,6 +28,6 @@ router.use("/latex", latexCompiler);
 // users endpoint
 router.use("/users", users);
 
-router.use("/tex", express.static(path.join(__dirname, "../tex")));
+router.use("/templates", express.static(path.join(__dirname, "../templates")));
 
 module.exports = router;

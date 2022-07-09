@@ -106,4 +106,32 @@ router.post("/", (req, res) => {
   }
 });
 
+router.post("/tex", (req, res) => {
+  if (req.is("text/*")) {
+    req.text = "";
+    req.setEncoding("utf8");
+    req.on("data", (chunk) => {
+      req.text += chunk;
+    });
+
+    req.on("end", async () => {
+      try {
+        const latexCode = req.text;
+        const name = uuidv4();
+        await writeFileSync(`./templates/${name}.tex`, latexCode);
+
+        const texLink = `https://unica-server.vercel.app/api/templates/${name}.tex`;
+
+        res.json({
+          hallo: texLink,
+        });
+      } catch (e) {
+        res.status(500).json({
+          error: e.message,
+        });
+      }
+    });
+  }
+});
+
 module.exports = router;
