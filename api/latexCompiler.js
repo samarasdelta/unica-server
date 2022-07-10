@@ -77,6 +77,7 @@ router.get("/:template", async (req, res) => {
   }
 });
 
+// compile
 router.post("/", (req, res) => {
   if (req.is("text/*")) {
     req.text = "";
@@ -88,17 +89,9 @@ router.post("/", (req, res) => {
     req.on("end", async () => {
       try {
         const latexCode = req.text;
-        // const name = uuidv4();
-        // await writeFileSync(`./tex/${name}.tex`, latexCode);
-
-        // spawn process to to compile in latex
-        // await compileLatex(`./tex/${name}.tex`);
-        // return pdf
-        // const filePath = `./${name}.pdf`;
-        // const filePath = `${latexCode}`;
 
         res.json({
-          pdf: `https://latexonline.cc/compile?text=${latexCode}`,
+          pdf: `https://latexonline.cc/compile?text=${latexCode}&target=babis`,
         });
       } catch (e) {
         res.status(500).json({
@@ -109,6 +102,7 @@ router.post("/", (req, res) => {
   }
 });
 
+// download .pdf
 router.post("/download/pdf", (req, res) => {
   if (req.is("text/*")) {
     req.text = "";
@@ -133,6 +127,7 @@ router.post("/download/pdf", (req, res) => {
   }
 });
 
+// download .tex
 router.post("/download/tex", (req, res) => {
   if (req.is("text/*")) {
     req.text = "";
