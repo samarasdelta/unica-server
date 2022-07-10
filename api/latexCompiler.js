@@ -114,9 +114,10 @@ router.post("/download/pdf", (req, res) => {
     req.on("end", async () => {
       try {
         const pdfCode = req.text;
+        const projectName = "babis";
 
         res.json({
-          pdf: `https://latexonline.cc/compile?text=${pdfCode}&download=main.pdf`,
+          pdf: `https://latexonline.cc/compile?text=${pdfCode}&download=${projectName}.pdf`,
         });
       } catch (e) {
         res.status(500).json({
