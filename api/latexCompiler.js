@@ -106,7 +106,7 @@ router.post("/", (req, res) => {
 router.post("/download/pdf", (req, res) => {
   if (req.is("text/*")) {
     req.text = "";
-    req.fileName = "";
+    // req.fileName = "";
     req.setEncoding("utf8");
     req.on("data", (chunk) => {
       req.text += chunk;
@@ -115,7 +115,8 @@ router.post("/download/pdf", (req, res) => {
     req.on("end", async () => {
       try {
         const pdfCode = req.text;
-        const projectName = fileName;
+        const projectName = "main";
+        // const projectName = fileName;
 
         res.json({
           pdf: `https://latexonline.cc/compile?text=${pdfCode}&download=${projectName}.pdf`,
