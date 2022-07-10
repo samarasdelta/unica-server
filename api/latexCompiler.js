@@ -91,7 +91,7 @@ router.post("/", (req, res) => {
         const latexCode = req.text;
 
         res.json({
-          pdf: `https://latexonline.cc/compile?text=${latexCode}&target=babis`,
+          pdf: `https://latexonline.cc/compile?text=${latexCode}`,
         });
       } catch (e) {
         res.status(500).json({
