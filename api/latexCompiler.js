@@ -102,6 +102,31 @@ router.post("/", (req, res) => {
   }
 });
 
+// open
+router.post("/open", (req, res) => {
+  if (req.is("text/*")) {
+    req.text = "";
+    req.setEncoding("utf8");
+    req.on("data", (chunk) => {
+      req.text += chunk;
+    });
+
+    req.on("end", async () => {
+      try {
+        const latexCode = req.text;
+
+        res.json({
+          pdf: `https://latexonline.cc/compile?text=${latexCode}`,
+        });
+      } catch (e) {
+        res.status(500).json({
+          error: e.message,
+        });
+      }
+    });
+  }
+});
+
 // download .pdf
 router.post("/download/pdf", (req, res) => {
   if (req.is("text/*")) {
