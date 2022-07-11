@@ -113,10 +113,10 @@ router.post("/open", (req, res) => {
 
     req.on("end", async () => {
       try {
-        const latexCode = req.text;
+        const openLink = req.text;
 
         res.json({
-          pdf: `https://latexonline.cc/compile?text=${latexCode}`,
+          open: `https://latexonline.cc/compile?text=${openLink}`,
         });
       } catch (e) {
         res.status(500).json({
