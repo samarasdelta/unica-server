@@ -5,6 +5,7 @@ module.exports = {
   USER: "b797c3a2cc660f",
   PASS: "8e5e4d90",
   DB: "heroku_42b9e19a38ed999",
+  CONLIMIT: "100",
 
   // localhost config
 
